@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">AndroidTools</string>
+    <string-array name="works">
+        <item>ButterKnife</item>
+        <item>Okhttp</item>
+    </string-array>
+    <string name="str">test</string>
 </resources>

@@ -1,13 +1,48 @@
 package com.uuun.androidtools;
 
+import android.app.ListActivity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
+import com.yanzhenjie.permission.Rationale;
+import com.yanzhenjie.permission.RationaleListener;
 
+/**
+ * @author zh_legendd
+ * @date 创建时间 2018/12/30 0030 18:35
+ * @Description 主页面
+ * @Email code_legend@163.com
+ * @Version 1.0
+ */
+public class MainActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+//        setContentView(R.layout.activity_main);
+        String[] strings=getResources().getStringArray(R.array.works);
+        setListAdapter(new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, strings));
+    }
+
+    @Override
+    protected void onListItemClick(ListView listView, View v, int position, long id) {
+//        Toast.makeText(this,position+"",Toast.LENGTH_SHORT).show();
+        switch (position){
+            case 0:
+                Intent intentButter = ButterKnifeActivity.newIntent(this);
+                startActivity(intentButter);
+                break;
+            case 1:
+                Intent intentOkhttp = OkhttpActivity.newIntent(this);
+                startActivity(intentOkhttp);
+                break;
+        }
     }
 }
