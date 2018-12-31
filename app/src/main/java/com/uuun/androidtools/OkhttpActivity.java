@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
+import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -30,9 +31,12 @@ import okhttp3.Response;
 
 public class OkhttpActivity extends AppCompatActivity{
 
-    private static final String url="https://api.apiopen.top/getJoke?page=1&count=2&type=video";
+    private static final String url1="https://api.apiopen.top/getJoke?page=1&count=2&type=video";
+    private static final String url="https://www.26uuun.com/list?name=jj&age=ll";
+    private static final String url2="https://www.26uuun.com/list";
     public static final MediaType JSON
             = MediaType.parse("application/json; charset=utf-8");
+
     public TextView tv_data;
 
     OkHttpClient client = new OkHttpClient();
@@ -53,14 +57,20 @@ public class OkhttpActivity extends AppCompatActivity{
             @Override
             public void run() {
                 try {
+
+                    FormBody formBody = new FormBody.Builder()
+                            .add("name", "admin")
+                            .add("age", "admin")
+                            .build();
                     Request request = new Request.Builder()
-                            .url(url)
+                            .url(url2)
+                            .post(formBody)
                             .build();
 
+
                     Response response = client.newCall(request).execute();
-//                    Toast.makeText(OkhttpActivity.this,response.body().string(),Toast.LENGTH_SHORT).show();
+//                  Toast.makeText(OkhttpActivity.this,response.body().string(),Toast.LENGTH_SHORT).show();
                     Log.e("error",response.body().string());
-//                    tv_data.setText(response.body().string());
                 } catch (IOException e) {
                     Toast.makeText(OkhttpActivity.this,"异常",Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
@@ -68,21 +78,19 @@ public class OkhttpActivity extends AppCompatActivity{
             }
         };
     }
-//    private void initData2(){
-//butterknife
-//
-//        OkHttpClient client = new OkHttpClient();
-//
-//
-//            RequestBody body = RequestBody.create(JSON, json);
-//            Request request = new Request.Builder()
-//                    .url(url)
-//                    .post(body)
-//                    .build();
-//            Response response = client.newCall(request).execute();
-//
-//
-//    }
+
+    String post(String url, String json) throws IOException {
+        RequestBody body = RequestBody.create(JSON, json);
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("name","jj")
+                .addHeader("age","18")
+//                .post(body)
+                .build();
+        Response response = client.newCall(request).execute();
+        return response.body().string();
+    }
+
 
     public static Intent newIntent(Context packageContext) {
         Intent intent = new Intent(packageContext, OkhttpActivity.class);
