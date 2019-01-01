@@ -2,18 +2,12 @@ package com.uuun.androidtools;
 
 import android.app.ListActivity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.yanzhenjie.permission.AndPermission;
-import com.yanzhenjie.permission.Permission;
-import com.yanzhenjie.permission.Rationale;
-import com.yanzhenjie.permission.RationaleListener;
+import com.uuun.androidtools.okhttp.OkhttpActivity;
 
 /**
  * @author zh_legendd
@@ -33,7 +27,6 @@ public class MainActivity extends ListActivity {
 
     @Override
     protected void onListItemClick(ListView listView, View v, int position, long id) {
-//        Toast.makeText(this,position+"",Toast.LENGTH_SHORT).show();
         switch (position){
             case 0:
                 Intent intentButter = ButterKnifeActivity.newIntent(this);
