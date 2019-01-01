@@ -13,13 +13,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okio.BufferedSink;
+
+import static android.R.attr.name;
 
 /**
  * @author zh_legendd
@@ -32,46 +38,85 @@ import okhttp3.Response;
 public class OkhttpActivity extends AppCompatActivity{
 
     private static final String url1="https://api.apiopen.top/getJoke?page=1&count=2&type=video";
-    private static final String url="https://www.26uuun.com/list?name=jj&age=ll";
-    private static final String url2="https://www.26uuun.com/list";
+    private static final String url3="https://api.apiopen.top/getJoke";
     public static final MediaType JSON
             = MediaType.parse("application/json; charset=utf-8");
-
-    public TextView tv_data;
-
-    OkHttpClient client = new OkHttpClient();
-    Runnable runnable;
+    private Runnable runnable;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_okhttp);
-         tv_data = (TextView)findViewById(R.id.tv_data);
-
-        initData();
+        okhttpPost();
         new Thread(runnable).start();
+//        okhttpAsyncGet();
+//        okhttpAsyncPost();
+    }
+    OkHttpClient client = new OkHttpClient()
+            .newBuilder()
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS).build();
+    private void okhttpAsyncGet(){
+        Request request = new Request.Builder()
+                .url("https://api.apiopen.top/getJoke?page=1&count=2&type=video")
+                .build();
 
+
+
+       client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.e("error",response.body().string());
+            }
+        });
+    }
+    private void okhttpAsyncPost(){
+        RequestBody formBody = new FormBody.Builder()
+                .add("page", "1")
+                .add("count", "2")
+                .add("type","video")
+                .build();
+        Request request = new Request.Builder()
+                .url("https://api.apiopen.top/getJoke")
+                .post(formBody)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.e("error",response.body().string());
+            }
+        });
     }
 
-    private void initData()  {
+    private void okhttpPost()  {
         runnable = new Runnable(){
             @Override
             public void run() {
                 try {
 
-                    FormBody formBody = new FormBody.Builder()
-                            .add("name", "admin")
-                            .add("age", "admin")
+                    RequestBody formBody = new FormBody.Builder()
+                            .add("page", "1")
+                            .add("count", "2")
+                            .add("type","video")
                             .build();
                     Request request = new Request.Builder()
-                            .url(url2)
+                            .url("https://api.apiopen.top/getJoke")
                             .post(formBody)
                             .build();
-
-
                     Response response = client.newCall(request).execute();
-//                  Toast.makeText(OkhttpActivity.this,response.body().string(),Toast.LENGTH_SHORT).show();
                     Log.e("error",response.body().string());
-                } catch (IOException e) {
+                } catch (Exception e) {
                     Toast.makeText(OkhttpActivity.this,"异常",Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
@@ -79,17 +124,6 @@ public class OkhttpActivity extends AppCompatActivity{
         };
     }
 
-    String post(String url, String json) throws IOException {
-        RequestBody body = RequestBody.create(JSON, json);
-        Request request = new Request.Builder()
-                .url(url)
-                .addHeader("name","jj")
-                .addHeader("age","18")
-//                .post(body)
-                .build();
-        Response response = client.newCall(request).execute();
-        return response.body().string();
-    }
 
 
     public static Intent newIntent(Context packageContext) {
