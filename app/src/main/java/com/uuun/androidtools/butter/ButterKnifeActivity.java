@@ -1,4 +1,4 @@
-package com.uuun.androidtools;
+package com.uuun.androidtools.butter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.uuun.androidtools.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

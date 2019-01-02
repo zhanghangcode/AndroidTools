@@ -49,7 +49,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".okhttp.OkhttpActivity"/>
-        <activity android:name=".ButterKnifeActivity"/>
+        <activity android:name=".butter.ButterKnifeActivity"/>
+        <activity android:name=".retrofit.RetrofitActivity"/>
     </application>
 
 </manifest>
