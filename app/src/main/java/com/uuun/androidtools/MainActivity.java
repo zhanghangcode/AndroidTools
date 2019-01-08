@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import com.uuun.androidtools.butter.ButterKnifeActivity;
 import com.uuun.androidtools.okhttp.OkhttpActivity;
+import com.uuun.androidtools.retrofit.RetrofitActivity;
 
 /**
  * @author zh_legendd
@@ -36,6 +37,10 @@ public class MainActivity extends ListActivity {
             case 1:
                 Intent intentOkhttp = OkhttpActivity.newIntent(this);
                 startActivity(intentOkhttp);
+                break;
+            case 2:
+                Intent intentRetrofit = RetrofitActivity.newIntent(this);
+                startActivity(intentRetrofit);
                 break;
         }
     }

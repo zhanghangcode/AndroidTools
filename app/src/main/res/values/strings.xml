@@ -3,6 +3,7 @@
     <string-array name="works">
         <item>ButterKnife</item>
         <item>Okhttp</item>
+        <item>Retrofit</item>
     </string-array>
     <string name="str">test</string>
 </resources>
